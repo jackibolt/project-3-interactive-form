@@ -203,7 +203,7 @@ $nameInput.on('input', () => {
     if (regexName.test($nameInput.val())) {
         $nameInput.removeClass('error');
     } else {
-        createErrorMessage('Please enter a valid first and last name', $nameInput);
+        createErrorMessage('Please enter a valid first and last name with a space in between', $nameInput);
     };
 })
 
@@ -212,8 +212,10 @@ $nameInput.on('input', () => {
 const nameValidation = (input) => {
     if (regexName.test(input.val())) {
         input.removeClass('error');
-    } else {
+    } else if (input.val() === ''){
         createErrorMessage('Please enter a valid first and last name', input);
+    } else {
+        createErrorMessage('Please enter a valid first and last name with a space in between', input);
     };
 }
 
@@ -227,7 +229,7 @@ $emailInput.on('input', () => {
     if (regexEmail.test($emailInput.val())) {
         $emailInput.removeClass('error');
     } else {
-        createErrorMessage('Please enter a valid email address.', $emailInput);
+        createErrorMessage('Please enter a valid email address (ex. jacki@sample.com).', $emailInput);
     };
 })
 
@@ -235,8 +237,10 @@ $emailInput.on('input', () => {
 const emailValidation = (input) => {
     if (regexEmail.test(input.val())) {
         input.removeClass('error');
-    } else {
+    } else if (input.val() === ''){
         createErrorMessage('Please enter a valid email address.', input);
+    } else {
+        createErrorMessage('Please enter a valid email address (ex. jacki@sample.com).', input);
     };
 }
 
