@@ -147,6 +147,7 @@ $activitiesDiv.on('change', (e) => {
 
 
 // PAYMENT FUNCTIONALITY
+$paymentSelection.val('credit card');
 
 $paymentSelection.on('change', () => {
     // reset credit card inputs
@@ -181,6 +182,7 @@ const removeError = () => {
     const $errorCheck = $('.error-message');
     if ($errorCheck || $error) {
         $errorCheck.remove();
+        return true;
     }
 }
 
@@ -286,7 +288,7 @@ const paymentValidation = (input) => {
 
 
 // CREDIT CARD VALIDATION
-const regexCC = /^\d{4}-*\d{4}-*\d{4}-*\d{4}$/;
+const regexCC = /^\d{4}-*\d{4}-*\d{4}-*\d{1,4}$/;
 
 // credit card validation on input
 $creditCardInput.on('input', () => {
@@ -294,7 +296,7 @@ $creditCardInput.on('input', () => {
     if (regexCC.test($creditCardInput.val())) {
         $creditCardInput.removeClass('error');
     } else {
-        createErrorMessage('Enter a valid 16 digit credit card number', $creditCardInput);
+        createErrorMessage('Enter a valid 13-16 digit credit card number', $creditCardInput);
     };
 })
 
@@ -303,7 +305,9 @@ const creditCardNumberValidation = (input) => {
     if (regexCC.test(input.val())) {
         input.removeClass('error');
     } else {
-        createErrorMessage('Enter a valid 16 digit credit card number', input);
+        createErrorMessage('Enter a valid credit card number', input);
+    // } else {
+    //     createErrorMessage('Enter a valid 13-16 digit credit card number', input);
     };
 }
 
@@ -361,8 +365,8 @@ const cvvValidation = (input) => {
 
 // event listener to call all validators
 $submit.on('click', (event) => {
-    event.preventDefault();
     removeError();
+    const $errorCheck = $('.error-message');
     nameValidation($nameInput);
     emailValidation($emailInput);
     activityValidation();
@@ -372,5 +376,10 @@ $submit.on('click', (event) => {
         zipCodeValidation($zipInput);
         cvvValidation($cvvInput);
     }
+    if ($errorCheck || $error) {
+        event.preventDefault();
+        console.log('error messages are still occuring');
+        }
+
 })
 
